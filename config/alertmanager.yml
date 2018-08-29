@@ -1,0 +1,28 @@
+global:
+  smtp_smarthost: 'smtp.163.com:465'   # 139发件服务器 ，同理也可设置qq企业，163邮箱等
+  smtp_from: 'morningsir108@163.com'
+  smtp_auth_username: 'morningsir108@163.com'
+  smtp_auth_password: 'zjl@204101011!'
+
+route:
+  group_by: ['alertname']
+  group_wait: 30s
+  group_interval: 1m
+  repeat_interval: 2m
+  receiver: dingding_webhook
+
+  routes:
+  - receiver: dingding_webhook
+    match:
+      severity: page
+
+receivers:
+  - name: 'zjl'
+    email_configs:
+    - to: 'zhoujinliang@startdt.com'
+      require_tls: false
+
+  - name: 'dingding_webhook'
+    webhook_configs:
+    - send_resolved: false
+      url: http://172.16.18.1:8060/dingtalk/webhook1/send
