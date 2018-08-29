@@ -1,0 +1,29 @@
+global:                    # 全局设置
+  scrape_interval:     15s # 用于设置每次数据收集的间隔
+  evaluation_interval: 15s # Evaluate rules every 15 seconds. The default is every 1 minute.
+
+alerting:
+  alertmanagers:
+  - static_configs:
+    - targets: ["172.16.18.1:9093"]
+
+rule_files: 
+  - /etc/prometheus/rules.yml
+
+scrape_configs:
+  - job_name: 'prometheus'
+    static_configs:
+    - targets: ['localhost:9090']
+
+  - job_name: 'localserver_pushgateway'
+    honor_labels: true
+    static_configs:
+    - targets: ['172.16.18.1:9091']
+
+  - job_name: 'pre_env'
+    static_configs:
+    - targets: ['172.16.13.12:9100','172.16.13.166:9100','172.16.13.8:9100','172.16.13.4:9100','172.16.13.14:9100','172.16.13.16:9100','172.16.13.2:9100','172.16.13.3:9100','172.16.13.5:9100','172.16.13.6:9100','172.16.13.11:9100','172.16.13.9:9100','172.16.13.10:9100','172.16.13.7:9100','172.16.13.13:9100']
+
+  - job_name: 'txcloud'
+    static_configs:
+    - targets: ['212.64.19.61:9100','118.25.123.97:9100','212.64.2.77:9100','212.64.20.128:9100','111.231.87.24:9100','212.64.20.198:9100','118.25.181.177:9100','212.64.20.49:9100','122.152.221.59:9100','212.64.25.206:9100','111.231.58.150:9100']
