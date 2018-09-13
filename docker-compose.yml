@@ -1,0 +1,26 @@
+version: "3"
+services:
+  prom:
+    image: prom/prometheus:v2.3.2
+    volumes:
+      - /opt/prometheus.yml:/etc/prometheus/prometheus.yml
+      - /opt/rules.yml:/etc/prometheus/rules.yml
+      - /opt/prometheus:/prometheus
+    ports:
+      - 9090:9090
+  alertmanager:
+    image: prom/alertmanager:v0.15.0
+    volumes:
+      - /opt/alertmanager.yml:/etc/alertmanager/alertmanager.yml
+    ports:
+      - 9093:9093
+  pushgateway:
+    image: prom/pushgateway:v0.5.2
+    ports:
+      - 9091:9091
+  grafana:
+    image: grafana/grafana:5.2.1
+    volumes:
+      - /opt/grafana-storage:/var/lib/grafana
+    ports:
+      - 3000:3000
