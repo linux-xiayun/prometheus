@@ -2,6 +2,7 @@ version: "3"
 services:
   prom:
     image: prom/prometheus:v2.3.2
+    hostname: prom.startdt.net
     volumes:
       - /opt/prometheus.yml:/etc/prometheus/prometheus.yml
       - /opt/rules.yml:/etc/prometheus/rules.yml
@@ -10,6 +11,7 @@ services:
       - 9090:9090
   alertmanager:
     image: prom/alertmanager:v0.15.0
+    hostname: alert.startdt.net
     volumes:
       - /opt/alertmanager.yml:/etc/alertmanager/alertmanager.yml
     ports:
