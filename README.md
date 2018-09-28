@@ -49,7 +49,7 @@ docker run -p 9090:9090 my-prometheus
 ## 配置文件在运行时动态reload
 方式1：kill -HUP ${prometheus_pid}  
 方式2：需要 --web.enable-lifecycle 参数为true  
-curl -X POST http://10.0.209.140:9090/-/reload
+curl -X POST http://prometheus:9090/-/reload
 ## 配置文件
 [以YAML格式编写：关于YAML格式的简单说明](http://www.jianshu.com/p/2583a81ebfd0)
 ### 配置文件内容
