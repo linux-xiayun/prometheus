@@ -6,23 +6,55 @@ services:
     volumes:
       - /opt/prometheus.yml:/etc/prometheus/prometheus.yml
       - /opt/rules.yml:/etc/prometheus/rules.yml
+      - /opt/rules:/etc/prometheus/rules
       - /opt/prometheus:/prometheus
+      - /etc/localtime:/etc/localtime:ro
     ports:
       - 9090:9090
+    environment:
+      - TZ=Asiz/Shanghai
   alertmanager:
     image: prom/alertmanager:v0.15.0
     hostname: alert.startdt.net
-    volumes:
+    volumes: 
       - /opt/alertmanager.yml:/etc/alertmanager/alertmanager.yml
+      - /etc/localtime:/etc/localtime:ro
     ports:
       - 9093:9093
-  pushgateway:
+    environment:
+      - TZ=Asiz/Shanghai
+  pushgateway: 
     image: prom/pushgateway:v0.5.2
     ports:
       - 9091:9091
+    environment:
+      - TZ=Asiz/Shanghai
   grafana:
     image: grafana/grafana:5.2.1
+    hostname: grafana.startdt.net
     volumes:
       - /opt/grafana-storage:/var/lib/grafana
+      - /etc/localtime:/etc/localtime:ro
     ports:
       - 3000:3000
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=XXXXX
+      - GF_SMTP_ENABLED=true
+      - GF_SMTP_HOST=smtp.163.com:465
+      - GF_SMTP_USER=bz_monitor@163.com
+      - GF_SMTP_PASSWORD=xxxxxx
+      - GF_SMTP_FROM_ADDRESS=bz_monitor@163.com
+      - GF_SERVER_ROOT_URL=http://grafana.startdt.net
+      - TZ=Asiz/Shanghai
+  cadvisor:
+    image: google/cadvisor:latest
+    volumes: 
+      - /:/rootfs:ro
+      - /var/run:/var/run:rw
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+      - /etc/localtime:/etc/localtime:ro
+    ports:
+      - 8080:8080
+    environment:
+      - TZ=Asiz/Shanghai
