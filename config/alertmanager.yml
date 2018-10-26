@@ -1,28 +1,40 @@
-global:
-  smtp_smarthost: 'smtp.163.com:465'   # 139发件服务器 ，同理也可设置qq企业，163邮箱等
-  smtp_from: 'morningsir108@163.com'
-  smtp_auth_username: 'morningsir108@163.com'
-  smtp_auth_password: 'zjl@204101011!'
+global:                    # 全局设置
+  scrape_interval:     15s # 用于向pushgateway采集数据的频率
+  evaluation_interval: 15s # Evaluate rules every 15 seconds. The default is every 1 minute.表示规则计算的频率
 
-route:
-  group_by: ['alertname']
-  group_wait: 30s
-  group_interval: 1m
-  repeat_interval: 2m
-  receiver: dingding_webhook
+alerting:
+  alertmanagers:
+  - static_configs:
+    - targets: ['172.16.18.6:9093']
 
-  routes:
-  - receiver: dingding_webhook
-    match:
-      severity: page
+rule_files: 
+  - /etc/prometheus/rules.yml
+  - /etc/prometheus/rules/*.rules
 
-receivers:
-  - name: 'zjl'
-    email_configs:
-    - to: 'zhoujinliang@startdt.com'
-      require_tls: false
+scrape_configs:
+  - job_name: 'prometheus'
+    static_configs:
+    - targets: ['localhost:9090','172.16.18.6:9100']
+  
+  - job_name: 'cadvisor'
+    static_configs:
+    - targets: ['172.16.18.6:8080']
 
-  - name: 'dingding_webhook'
-    webhook_configs:
-    - send_resolved: false
-      url: http://172.16.18.1:8060/dingtalk/webhook1/send
+  - job_name: 'pushgateway_suanfa'
+    honor_labels: true
+    static_configs:
+    - targets: ['172.16.18.6:9091']
+
+  - job_name: '算法服务'
+    static_configs:
+    - targets: ['39.104.209.31:9100','39.104.89.63:9100','172.16.3.13:9100','172.16.3.81:9100']
+  
+  - job_name: 'xy-test'
+    static_configs:
+    - targets: ['172.16.10.154:9100','172.16.10.153:9100',]
+
+  - job_name: 'tx-java-alived'
+    static_configs:
+    - targets: ['172.16.18.6:9091']
+      labels:
+        instance: tx
