@@ -7,8 +7,7 @@ services:
    ports:
    - "5432:5432"
    volumes:
-     - /opt/pg_prometheus/postgresql.conf:/var/lib/postgresql/data/postgresql.conf 
-     - /opt/pg_prometheus/data:/var/lib/postgresql/data/base
+     - pgdata:/var/lib/postgresql/data
    environment:
      - POSTGRES_USER=postgres
      - POSTGRES_PASSWORD=startdt@123!
@@ -26,3 +25,6 @@ services:
      pg_prometheus:
        condition: service_healthy
    command: "-pg.host=pg_prometheus -log.level=warn -pg.user=postgres -pg.password=startdt@123!"
+volumes:
+   pgdata:
+     external: true
