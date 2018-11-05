@@ -60,7 +60,18 @@ groups:
     expr: java != 1
     for: 1m
     labels:
-      severity: yellow
+      severity: mogui
     annotations:
       summary: "Instance {{ $labels.instance }} java  not start"
       description: "{{ $labels.instance }} java not start"
+
+- name: Python_Pid_Stats_Alert
+  rules:
+  - alert: python进程报警
+    expr: python != 1
+    for: 1m
+    labels:
+      severity: mogui
+    annotations:
+      summary: "Instance {{ $labels.instance }} python  not start"
+      description: "{{ $labels.instance }} python not start"

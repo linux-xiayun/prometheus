@@ -38,11 +38,11 @@ services:
     ports:
       - 3000:3000
     environment:
-      - GF_SECURITY_ADMIN_PASSWORD=XXXXX
+      - GF_SECURITY_ADMIN_PASSWORD=xxx
       - GF_SMTP_ENABLED=true
       - GF_SMTP_HOST=smtp.163.com:465
       - GF_SMTP_USER=bz_monitor@163.com
-      - GF_SMTP_PASSWORD=xxxxxx
+      - GF_SMTP_PASSWORD=xxx
       - GF_SMTP_FROM_ADDRESS=bz_monitor@163.com
       - GF_SERVER_ROOT_URL=http://grafana.startdt.net
       - TZ=Asiz/Shanghai

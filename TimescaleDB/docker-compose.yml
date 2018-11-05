@@ -1,0 +1,28 @@
+version: '2.1'
+services:
+ pg_prometheus:
+   image: timescale/pg_prometheus:master
+   command: -c synchronous_commit=OFF
+   container_name: pg_prometheus
+   ports:
+   - "5432:5432"
+   volumes:
+     - /opt/pg_prometheus/postgresql.conf:/var/lib/postgresql/data/postgresql.conf 
+     - /opt/pg_prometheus/data:/var/lib/postgresql/data/base
+   environment:
+     - POSTGRES_USER=postgres
+     - POSTGRES_PASSWORD=startdt@123!
+   healthcheck:
+     test: ["CMD-SHELL", "pg_isready -U postgres"]
+     interval: 1s
+     timeout: 5s  
+     retries: 10
+ prometheus_postgresql_adapter:
+   image: timescale/prometheus-postgresql-adapter:master
+   container_name: prom_pg_adapter
+   ports:
+     - "9201:9201"
+   depends_on:
+     pg_prometheus:
+       condition: service_healthy
+   command: "-pg.host=pg_prometheus -log.level=warn -pg.user=postgres -pg.password=startdt@123!"
