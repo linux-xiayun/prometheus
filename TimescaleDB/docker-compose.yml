@@ -10,7 +10,7 @@ services:
      - pgdata:/var/lib/postgresql/data
    environment:
      - POSTGRES_USER=postgres
-     - POSTGRES_PASSWORD=startdt@123!
+     - POSTGRES_PASSWORD=xxx
    healthcheck:
      test: ["CMD-SHELL", "pg_isready -U postgres"]
      interval: 1s
@@ -24,7 +24,7 @@ services:
    depends_on:
      pg_prometheus:
        condition: service_healthy
-   command: "-pg.host=pg_prometheus -log.level=warn -pg.user=postgres -pg.password=startdt@123!"
+   command: "-pg.host=pg_prometheus -log.level=warn -pg.user=postgres -pg.password=xxx"
 volumes:
    pgdata:
      external: true
