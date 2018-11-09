@@ -14,14 +14,14 @@ rule_files:
   - /etc/prometheus/rules/*.rules
 
 remote_write:
-  - url: "http://172.16.18.6:9201/write"
+  - url: "http://x.x.x.x:9201/write"
     write_relabel_configs:
       - source_labels: ["job"]
         regex: "算法服务"
         action: keep
 
 remote_read:
-  - url: "http://172.16.18.6:9201/read"
+  - url: "http://x.x.x.x:9201/read"
 
 scrape_configs:
   - job_name: 'prometheus'
