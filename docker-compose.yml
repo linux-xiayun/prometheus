@@ -9,6 +9,7 @@ services:
       - /opt/rules:/etc/prometheus/rules
       - /opt/prometheus:/prometheus
       - /etc/localtime:/etc/localtime:ro
+      - /opt/targets.json:/etc/prometheus/targets.json
     ports:
       - 9090:9090
     environment:
