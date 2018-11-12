@@ -4,7 +4,7 @@ global:
   smtp_smarthost: 'smtp.163.com:465'   # 139发件服务器 ，同理也可设置qq企业，163邮箱等
   smtp_from: 'bz_monitor@163.com'
   smtp_auth_username: 'bz_monitor@163.com'
-  smtp_auth_password: 'xxx'
+  smtp_auth_password: ''
 
 # 定义路由树信息
 route:
@@ -18,15 +18,15 @@ route:
   - receiver: dingding_webhook
     match:
       severity: red|yellow  #将rules.yml里labels对应
+
   - receiver: bz
     match:
-      severity: red|yellow
-   
+      severity: red|yellow  #将rules.yml里labels对应 
 # 定义警报接收者信息
 receivers:
   - name: 'bz'
     email_configs:
-    - to: 'bz_monitor@163.com,xiayun@startdt.com'
+    - to: 'xiayun@startdt.com'
       require_tls: false
 
   - name: 'dingding_webhook'
