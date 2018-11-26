@@ -1,10 +1,10 @@
-# 全局配置项
 global:
   resolve_timeout: 5m #处理超时时间，默认为5min
-  smtp_smarthost: 'smtp.163.com:465'   # 139发件服务器 ，同理也可设置qq企业，163邮箱等
-  smtp_from: 'bz_monitor@163.com'
-  smtp_auth_username: 'bz_monitor@163.com'
+  smtp_smarthost: 'smtp.qq.com:587'
+  smtp_from: 'alert-monitor@qq.com'
+  smtp_auth_username: 'alert-monitor@qq.com'
   smtp_auth_password: ''
+  smtp_require_tls: true
 
 # 定义路由树信息
 route:
@@ -12,24 +12,18 @@ route:
   group_wait: 30s           #定义一定时间内等待接收新的告警
   group_interval: 1m        #定义相同Group之间发送告警通知的时间间隔
   repeat_interval: 1h       #发送通知后的静默等待时间
-  receiver: dingding_webhook # 发送警报的接收者的名称，以下receivers name的名称
+  receiver: 'bz' # 发送警报的接者的名称，以下receivers name的名称
 
   routes:
-  - receiver: dingding_webhook
-    match:
-      severity: red|yellow  #将rules.yml里labels对应
-
   - receiver: bz
     match:
       severity: red|yellow  #将rules.yml里labels对应 
 # 定义警报接收者信息
 receivers:
   - name: 'bz'
-    email_configs:
-    - to: 'xiayun@startdt.com'
-      require_tls: false
-
-  - name: 'dingding_webhook'
+#    email_configs:
+#    - to: "xiayun@startdt.com"
+#      send_resolved: true
     webhook_configs:
     - send_resolved: true
       url: http://172.16.18.6:8060/dingtalk/webhook1/send
@@ -42,4 +36,3 @@ inhibit_rules:
     target_match:
       severity: yellow
     equal: ['alertname','instance']
-
