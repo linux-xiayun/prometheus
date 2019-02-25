@@ -2,9 +2,9 @@
 global:
   resolve_timeout: 5m #处理超时时间，默认为5min
   smtp_smarthost: 'smtp.qq.com:587'
-  smtp_from: '###@qq.com'
-  smtp_auth_username: '###@qq.com'
-  smtp_auth_password: '########'
+  smtp_from: 'alert-monitor@qq.com'
+  smtp_auth_username: 'alert-monitor@qq.com'
+  smtp_auth_password: 'orijfxkcouueeadg'
   smtp_require_tls: true
 
 # 定义路由树信息
